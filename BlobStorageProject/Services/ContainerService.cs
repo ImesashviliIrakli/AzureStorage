@@ -34,9 +34,26 @@ namespace BlobStorageProject.Services
             return containerName;
         }
 
-        public Task<List<string>> GetAllContainerAndBlobs()
+        public async Task<List<string>> GetAllContainerAndBlobs()
         {
-            throw new NotImplementedException();
+            List<string> containerAndBlobNames = new();
+
+            containerAndBlobNames.Add("AccountName: " + _blobServiceClient.AccountName);
+            containerAndBlobNames.Add("==============================================");
+
+            await foreach (BlobContainerItem blobContainerItem in _blobServiceClient.GetBlobContainersAsync())
+            {
+                containerAndBlobNames.Add("==" + blobContainerItem.Name);
+                BlobContainerClient blobContainer = _blobServiceClient.GetBlobContainerClient(blobContainerItem.Name);
+
+                await foreach(BlobItem blobItem in blobContainer.GetBlobsAsync())
+                {
+                    containerAndBlobNames.Add("====" + blobItem.Name);
+                }
+                containerAndBlobNames.Add("==============================================");
+            }
+
+            return containerAndBlobNames;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BlobStorageProject.Models;
+using BlobStorageProject.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,16 @@ namespace BlobStorageProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IContainerService _containerService;
+        public HomeController(IContainerService containerService)
         {
-            _logger = logger;
+            _containerService = containerService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var hierarchy = await _containerService.GetAllContainerAndBlobs();
+            return View(hierarchy);
         }
 
         public IActionResult Privacy()

@@ -1,4 +1,5 @@
-﻿using BlobStorageProject.Models;
+﻿using Azure.Storage.Blobs;
+using BlobStorageProject.Models;
 using BlobStorageProject.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace BlobStorageProject.Controllers
         private readonly IContainerService _containerService;
         public ContainerController(IContainerService containerService)
         {
-            _containerService = containerService;       
+            _containerService = containerService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,7 +34,7 @@ namespace BlobStorageProject.Controllers
 
             await _containerService.CreateContainer(container.Name);
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(string containerName)

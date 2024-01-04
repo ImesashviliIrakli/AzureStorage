@@ -5,10 +5,10 @@
 <div class="border backgroundWhite p-4">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info"> Container List</h2>
+            <h2> Container List</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;  Create New </a>
+            <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> &nbsp;  Create New </a>
         </div>
     </div>
     <br />
@@ -29,7 +29,7 @@
                             @Html.DisplayFor(m => item)
                         </td>
                         <td>
-                            <a class="btn btn-primary text-white" asp-action="Manage" asp-controller="Blob" asp-route-containerName="@item">
+                            <a class="btn btn-primary text-white" asp-action="Index" asp-controller="Blob" asp-route-containerName="@item">
                                 Manage
                             </a>
 
@@ -43,7 +43,7 @@
         }
         else
         {
-            <p>No category exists...</p>
+            <p>No container exists...</p>
         }
     </div>
 </div>
