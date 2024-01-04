@@ -1,49 +1,51 @@
 ﻿@model List<string>
 
-<br />
-<br />
-<div class="border backgroundWhite p-4">
-    <div class="row">
-        <div class="col-6">
-            <h2> Container List</h2>
+<div class="container mt-4">
+    <div class="card p-4">
+        <div>
+            <h2>Container List</h2>
         </div>
-        <div class="col-6 text-right">
-            <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> &nbsp;  Create New </a>
+        <div class="mt-2">
+            <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Create New</a>
         </div>
-    </div>
-    <br />
-    <div>
+
+        <hr />
+
         @if (Model.Count() > 0)
         {
-            <table class="table table-striped border">
-                <tr class="table-secondary">
-                    <th>
-                        Container Name
-                    </th>
-                    <th></th>
-                </tr>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(m => item)
-                        </td>
-                        <td>
-                            <a class="btn btn-primary text-white" asp-action="Index" asp-controller="Blob" asp-route-containerName="@item">
-                                Manage
-                            </a>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Container Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="Index" asp-controller="Blob" asp-route-containerName="@item">
+                                        <i class="fas fa-cogs"></i> Manage
+                                    </a>
 
-                            <a class="btn btn-danger text-white" asp-action="Delete" asp-route-containerName="@item">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </table>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-containerName="@item">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
         else
         {
-            <p>No container exists...</p>
+            <p class="text-muted">No container exists...</p>
         }
     </div>
 </div>

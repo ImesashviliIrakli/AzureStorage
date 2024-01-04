@@ -8,15 +8,22 @@ namespace BlobStorageProject.Controllers
     public class HomeController : Controller
     {
         private readonly IContainerService _containerService;
-        public HomeController(IContainerService containerService)
+        private readonly IBlobService _blobService;
+        public HomeController(IContainerService containerService, IBlobService blobService)
         {
             _containerService = containerService;
+            _blobService = blobService;
         }
 
         public async Task<IActionResult> Index()
         {
             var hierarchy = await _containerService.GetAllContainerAndBlobs();
             return View(hierarchy);
+        }
+
+        public async Task<IActionResult> Images()
+        {
+            return View(await _blobService.GetAllBlobsWithUri("barobarjakuzoi"));
         }
 
         public IActionResult Privacy()

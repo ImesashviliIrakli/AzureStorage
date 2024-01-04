@@ -1,30 +1,28 @@
 ﻿@model Container
 
-<div class="container border p-3">
-    <h2 class="text-info pb-2">Create Category</h2>
+<div class="container p-4">
+    <h2 class="text-info mb-3">Create Category</h2>
     <form method="post" asp-action="Create">
-        <div class="backgroundWhite">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="Name" class="col-form-label"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="Name" class="form-control" />
-                </div>
+        <div class="card p-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="sr-only">Category Name:</label>
+                <input asp-for="Name" class="form-control" placeholder="Category Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group row">
-                <div class="col-6">
-                    <input type="submit" class="btn btn-info form-control" value="Create" />
-                </div>
-                <div class="col-6">
-                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
-                </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-block">Create</button>
+            </div>
+
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-success btn-block">Back to List</a>
             </div>
         </div>
     </form>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -1,0 +1,27 @@
+﻿@model List<Blob>
+
+<div class="container-fluid">
+
+    <div class="row mt-4">
+        <div class="col text-center">
+            <h2 class="text-dark">Beautiful Image Gallery</h2>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <img src="@item.Uri" class="card-img-top" alt="@item.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>

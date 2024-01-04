@@ -48,7 +48,19 @@ namespace BlobStorageProject.Services
 
                 await foreach(BlobItem blobItem in blobContainer.GetBlobsAsync())
                 {
-                    containerAndBlobNames.Add("====" + blobItem.Name);
+                    // Get Metadata
+                    var blobClient = blobContainer.GetBlobClient(blobItem.Name);
+
+                    BlobProperties blobProperties = await blobClient.GetPropertiesAsync();
+
+                    string blobToAdd = blobItem.Name;
+
+                    if (blobProperties.Metadata.ContainsKey("title"))
+                    {
+                        blobToAdd += "(" + blobProperties.Metadata["title"] + ")";
+                    }
+
+                    containerAndBlobNames.Add("====" + blobToAdd);
                 }
                 containerAndBlobNames.Add("==============================================");
             }
