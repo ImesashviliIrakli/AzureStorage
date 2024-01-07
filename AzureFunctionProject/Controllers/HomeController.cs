@@ -1,4 +1,6 @@
-﻿using AzureFunctionProject.Models;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using AzureFunctionProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -8,12 +10,15 @@ namespace AzureFunctionProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private const string URL = "http://localhost:7088/api/OnSalesUploadWriteToQueue";
+
+        private readonly ILogger<HomeController> _logger;
+        private readonly BlobServiceClient _blobServiceClient;
         static readonly HttpClient client = new HttpClient();
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BlobServiceClient blobServiceClient)
         {
             _logger = logger;
+            _blobServiceClient = blobServiceClient;
         }
 
         public IActionResult Index()
@@ -24,7 +29,7 @@ namespace AzureFunctionProject.Controllers
         //
 
         [HttpPost]
-        public async Task<IActionResult> Index(SalesRequest salesRequest)
+        public async Task<IActionResult> Index(SalesRequest salesRequest, IFormFile file)
         {
             salesRequest.Id = Guid.NewGuid().ToString();
 
@@ -33,6 +38,20 @@ namespace AzureFunctionProject.Controllers
                 HttpResponseMessage response = await client.PostAsync(URL, content);
 
                 string result = response.Content.ReadAsStringAsync().Result;
+            }
+
+            if(file != null)
+            {
+                string fileName = salesRequest.Id + Path.GetExtension(file.FileName);
+                BlobContainerClient blobContainerClient = _blobServiceClient.GetBlobContainerClient("function-container");
+                var blobClient = blobContainerClient.GetBlobClient(fileName);
+
+                var httpheaders = new BlobHttpHeaders()
+                {
+                    ContentType = file.ContentType
+                };
+
+                await blobClient.UploadAsync(file.OpenReadStream(), httpheaders);
             }
 
             return RedirectToAction(nameof(Index));

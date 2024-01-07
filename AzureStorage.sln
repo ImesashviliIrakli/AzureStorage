@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureBlobExample", "AzureBl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureFunctionExample", "AzureFunctionExample", "{E1DF5633-32C7-4445-BC80-94BD50F2D26B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureFunction", "AzureFunction\AzureFunction.csproj", "{55547448-7FC8-431F-B638-E6A4D91C3496}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunction", "AzureFunction\AzureFunction.csproj", "{55547448-7FC8-431F-B638-E6A4D91C3496}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
